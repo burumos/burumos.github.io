@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAS fetch test</title>
+    <script src="./js/test.js" defer></script>
 </head>
 <body>
     <header>
@@ -11,21 +12,7 @@
     </header>
     <main>
         <p>This is a sample HTML template.</p>
+        <div id="result"></div>
     </main>
-    <script>
-        async function start() {
-            const res = await fetch(
-                'https://script.google.com/macros/s/AKfycbzSpscnJL8uUE02AOVfuAGfofh0i_r462yVqstGs7IOhUiDc6LCGWpheGw6ghRQURF-cQ/exec',
-                {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'text/plain'
-                    }
-                }
-            )
-            console.log(res);
-        }
-        start()
-    </script>
 </body>
 </html>
