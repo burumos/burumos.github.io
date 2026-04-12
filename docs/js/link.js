@@ -81,6 +81,7 @@ document.addEventListener('alpine:init', () => {
       };
       this.links.push(newLink);
       localStorage.setItem(storageKey, JSON.stringify(this.links));
+      this.newLink = {};
     },
   }));
 
