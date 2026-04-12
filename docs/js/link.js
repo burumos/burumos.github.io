@@ -67,6 +67,16 @@ document.addEventListener('alpine:init', () => {
       return `最近更新`;
     },
 
+    handleSort(id, position) {
+      console.log("Sorted item:", id, "New position:", position);
+      const movedLink = this.links.find(l => l.id === id);
+      if (!movedLink) return;
+
+      this.links = this.links.filter(l => l.id !== id);
+      this.links.splice(position, 0, movedLink);
+      localStorage.setItem(storageKey, JSON.stringify(this.links));
+    },
+
     handleAdd() {
       if (!this.newLink.url || !this.newLink.name) {
         alert("Please enter both URL and Name.");

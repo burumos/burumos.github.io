@@ -3,6 +3,7 @@
   <head>
     <title>burumos's top page</title>
     <script src="./js/link.js" defer></script>
+    <script src="./js/alpine-sort.js" defer></script>
     <script src="./js/alpine-3.15.11.js" defer></script>
     <style>
       body {
@@ -17,11 +18,18 @@
       }
       .link-table th, .link-table td {
         border: 1px solid black;
-        padding: 5px 10px;
+        padding: 15px 10px 5px;
         max-width: 35vw;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+      .link-table .url-column {
+        max-width: 100px;
+      }
+      .drag-cell {
+        cursor: move;
+        width: 20px;
       }
     </style>
   </head>
@@ -35,35 +43,42 @@
       <table class="link-table">
         <thead>
           <tr>
+            <th>D</th>
             <th>Name</th>
-            <th>URL</th>
+            <th class="url-column">URL</th>
             <th>Date</th>
             <th>Button</th>
             <th>Delete</th>
           </tr>
         </thead>
-        <template x-for="link in links">
+        <tbody x-sort="handleSort">
+          <template x-for="link in links">
+            <tr x-sort:item="link.id">
+              <td x-sort:handle class="drag-cell">@</td>
+              <td>
+                <a :href="link.url" target="_blank" rel="noopener noreferrer" x-text="link.name" @click="handleUpdate(link.id)"></a>
+              </td>
+              <td class="url-column">
+                <a :href="link.url" target="_blank" rel="noopener noreferrer" x-text="link.url" @click="handleUpdate(link.id)"></a>
+              </td>
+              <td x-text="formatDate(link.updated_at)"></td>
+              <td>
+                <button x-on:click="handleUpdate(link.id)">Update</button>
+              </td>
+              <td>
+                <button x-on:click="handleDelete(link.id)">Delete</button>
+              </td>
+            </tr>
+          </template>
           <tr>
-            <td x-text="link.name"></td>
-            <td>
-              <a :href="link.url" target="_blank" rel="noopener noreferrer" x-text="link.url" @click="handleUpdate(link.id)"></a>
-            </td>
-            <td x-text="formatDate(link.updated_at)"></td>
-            <td>
-              <button x-on:click="handleUpdate(link.id)">Update</button>
-            </td>
-            <td>
-              <button x-on:click="handleDelete(link.id)">Delete</button>
-            </td>
+            <td></td>
+            <td><input type="text" x-model="newLink.name"></td>
+            <td><input type="text" x-model="newLink.url"></td>
+            <td></td>
+            <td><button x-on:click="handleAdd()">Add</button></td>
+            <td></td>
           </tr>
-        </template>
-        <tr>
-          <td><input type="text" x-model="newLink.name"></td>
-          <td><input type="text" x-model="newLink.url"></td>
-          <td></td>
-          <td><button x-on:click="handleAdd()">Add</button></td>
-          <td></td>
-        </tr>
+        </tbody>
       </table>
 
   </div>
