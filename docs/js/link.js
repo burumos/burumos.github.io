@@ -13,9 +13,18 @@ document.addEventListener('alpine:init', () => {
       if (links) {
         this.links = JSON.parse(links);
       }
+
       setInterval(() => {
         this.now = new Date();
       }, 1000);
+
+      const name = getQueryParam('name');
+      const url = getQueryParam('url');
+      if (name && url) {
+        this.newLink = { name, url };
+        removeQueryParam('name');
+        removeQueryParam('url');
+      }
     },
 
     handleUpdate(id) {
@@ -96,3 +105,16 @@ document.addEventListener('alpine:init', () => {
   }));
 
 });
+
+// URLからqueryパラメータを取得する関数
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+// URLからqueryパラメータを取得して現在のURLから削除する関数
+function removeQueryParam(param) {
+  const url = new URL(window.location);
+  url.searchParams.delete(param);
+  window.history.replaceState({}, document.title, url.toString());
+}
