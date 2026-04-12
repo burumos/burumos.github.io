@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>burumos's top page</title>
+    <script src="./js/link.js" defer></script>
+    <script src="./js/alpine-3.15.11.js" defer></script>
+    <style>
+      body {
+        background-color: rgb(41, 41, 41);
+        color: white
+      }
+      a {
+        color: rgb(155, 171, 255);
+      }
+      .link-table {
+        border-collapse: collapse;
+      }
+      .link-table th, .link-table td {
+        border: 1px solid black;
+        padding: 5px 10px;
+        max-width: 35vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <a href="./index.html">Top</a>
+    </div>
+    <h1>Links</h1>
+
+    <section x-data="linkEx">
+      <table class="link-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Date</th>
+            <th>Button</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <template x-for="link in links">
+          <tr>
+            <td x-text="link.name"></td>
+            <td>
+              <a :href="link.url" target="_blank" rel="noopener noreferrer" x-text="link.url" @click="handleUpdate(link.id)"></a>
+            </td>
+            <td x-text="formatDate(link.updated_at)"></td>
+            <td>
+              <button x-on:click="handleUpdate(link.id)">Update</button>
+            </td>
+            <td>
+              <button x-on:click="handleDelete(link.id)">Delete</button>
+            </td>
+          </tr>
+        </template>
+        <tr>
+          <td><input type="text" x-model="newLink.name"></td>
+          <td><input type="text" x-model="newLink.url"></td>
+          <td></td>
+          <td><button x-on:click="handleAdd()">Add</button></td>
+          <td></td>
+        </tr>
+      </table>
+
+  </div>
+    </section>
+  </body>
+</html>
