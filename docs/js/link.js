@@ -16,7 +16,7 @@ document.addEventListener('alpine:init', () => {
 
       setInterval(() => {
         this.now = new Date();
-      }, 1000);
+      }, 10000);
 
       const name = getQueryParam('name');
       const url = getQueryParam('url');
@@ -77,10 +77,11 @@ document.addEventListener('alpine:init', () => {
     },
 
     handleSort(id, position) {
-      console.log("Sorted item:", id, "New position:", position);
+      console.debug("Sorted item:", id, "New position:", position);
       const movedLink = this.links.find(l => l.id === id);
       if (!movedLink) return;
 
+      console.debug("Moved link:", movedLink.name);
       this.links = this.links.filter(l => l.id !== id);
       this.links.splice(position, 0, movedLink);
       localStorage.setItem(storageKey, JSON.stringify(this.links));

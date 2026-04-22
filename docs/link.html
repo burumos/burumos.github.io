@@ -55,7 +55,7 @@
           </tr>
         </thead>
         <tbody x-sort="handleSort">
-          <template x-for="link in links">
+          <template x-for="link in links" :key="link.id">
             <tr x-sort:item="link.id">
               <td x-sort:handle class="drag-cell">@</td>
               <td>
