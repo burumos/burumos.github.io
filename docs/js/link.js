@@ -25,6 +25,13 @@ document.addEventListener('alpine:init', () => {
         removeQueryParam('name');
         removeQueryParam('url');
       }
+
+      // localStorageの変更監視して、他のタブで更新された場合に反映する
+      window.addEventListener('storage', (event) => {
+        if (event.key === storageKey) {
+          this.links = JSON.parse(event.newValue);
+        }
+      });
     },
 
     handleUpdate(id) {
